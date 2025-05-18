@@ -3,14 +3,17 @@ ion-content {
     background: url('/assets/img/ferre.png') no-repeat center center;
     background-size: cover;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100%;
     padding: 1rem;
+    box-sizing: border-box;
 }
 
 .page-wrapper {
     width: 100%;
     max-width: 900px;
+    margin: 0 auto;
     backdrop-filter: blur(6px);
     display: flex;
     flex-direction: column;
@@ -41,7 +44,8 @@ ion-label {
     color: #e2e8f0 !important;
 }
 
-ion-input {
+ion-input,
+ion-select {
     color: #ffffff;
 }
 
@@ -52,15 +56,11 @@ ion-button {
     --box-shadow: 0 4px 12px rgba(0, 173, 181, 0.4);
 }
 
-ion-button[color="warning"] {
-    --background: #ffb347;
-}
-
 ion-button[color="danger"] {
     --background: #ff5e5e;
 }
 
-ion-text p {
+p {
     text-align: center;
     color: #ccc;
 }

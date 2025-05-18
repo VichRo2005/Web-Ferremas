@@ -1,9 +1,15 @@
+// src/app/pages/listar-usuario/listar-usuario.page.ts
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { AdministracionService } from 'src/app/services/administracion.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { ComboBoxService } from 'src/app/services/combo-box.service';
 
 @Component({
   selector: 'app-listar-usuario',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './listar-usuario.page.html',
   styleUrls: ['./listar-usuario.page.scss']
 })
@@ -11,30 +17,38 @@ export class ListarUsuarioPage implements OnInit {
 
   usuarios: any[] = [];
 
-  usuarioForm: {
-    id_usuario: number | null;
-    nombre: string;
-    correo: string;
-    password: string;
-    tipo_usuario: string;
-  } = {
-      id_usuario: null,
-      nombre: '',
-      correo: '',
-      password: '',
-      tipo_usuario: ''
-    };
+  regiones: any[] = [];
+  comunas: any[] = [];
+  tiposUsuario: any[] = [];
+  sucursales: any[] = [];
+
+  usuarioForm = {
+    id_usuario: null as number | null,
+    p_nombre: '',
+    s_nombre: '',
+    a_paterno: '',
+    a_materno: '',
+    rut_usuario: '',
+    correo: '',
+    telefono: '',
+    direccion: '',
+    comuna: '',
+    tipo_usuario: '',
+    sucursal_id: ''
+  };
 
   modoEditar = false;
 
   constructor(
     private adminService: AdministracionService,
+    private comboBoxService: ComboBoxService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
     this.cargarUsuarios();
+    this.cargarCombos();
   }
 
   cargarUsuarios() {
@@ -49,36 +63,76 @@ export class ListarUsuarioPage implements OnInit {
     });
   }
 
+  cargarCombos() {
+    this.comboBoxService.getRegiones().subscribe(data => this.regiones = data);
+    this.comboBoxService.getTiposUsuario().subscribe(data => this.tiposUsuario = data);
+    this.comboBoxService.getSucursales().subscribe(data => this.sucursales = data);
+  }
+
+  // ✅ Correcto uso del parámetro regionId
+  onRegionSelected(regionId: number) {
+    this.usuarioForm.comuna = '';
+    this.comunas = [];
+
+    if (regionId) {
+      this.comboBoxService.getComunas(regionId).subscribe(data => {
+        this.comunas = data;
+      });
+    }
+  }
+
   prepararFormularioCrear() {
     this.usuarioForm = {
       id_usuario: null,
-      nombre: '',
+      p_nombre: '',
+      s_nombre: '',
+      a_paterno: '',
+      a_materno: '',
+      rut_usuario: '',
       correo: '',
-      password: '',
-      tipo_usuario: ''
+      telefono: '',
+      direccion: '',
+      comuna: '',
+      tipo_usuario: '',
+      sucursal_id: ''
     };
+    this.comunas = [];
     this.modoEditar = false;
   }
 
   prepararFormularioEditar(usuario: any) {
     this.usuarioForm = {
       id_usuario: usuario.id_usuario,
-      nombre: usuario.nombre,
+      p_nombre: usuario.p_nombre,
+      s_nombre: usuario.s_nombre,
+      a_paterno: usuario.a_paterno,
+      a_materno: usuario.a_materno,
+      rut_usuario: usuario.rut_usuario,
       correo: usuario.correo,
-      password: '',
-      tipo_usuario: usuario.tipo_usuario
+      telefono: usuario.telefono,
+      direccion: usuario.direccion,
+      comuna: usuario.comuna,
+      tipo_usuario: usuario.tipo_usuario,
+      sucursal_id: usuario.sucursal_id
     };
     this.modoEditar = true;
   }
 
   guardarUsuario() {
-    if (!this.usuarioForm.nombre || !this.usuarioForm.correo || !this.usuarioForm.tipo_usuario || (!this.modoEditar && !this.usuarioForm.password)) {
-      this.mostrarToast('Todos los campos son obligatorios');
-      return;
+    const camposObligatorios = [
+      'p_nombre', 'a_paterno', 'rut_usuario', 'correo',
+      'telefono', 'direccion', 'comuna', 'tipo_usuario', 'sucursal_id'
+    ];
+
+    for (const campo of camposObligatorios) {
+      if (!(this.usuarioForm as any)[campo]) {
+        this.mostrarToast(`El campo ${campo} es obligatorio`);
+        return;
+      }
     }
 
     if (this.modoEditar && this.usuarioForm.id_usuario !== null) {
-      const id_actual = 1;
+      const id_actual = 1; // Reemplaza con el ID real si es necesario
       this.adminService.editarUsuario(this.usuarioForm.id_usuario, this.usuarioForm, id_actual).subscribe({
         next: () => {
           this.mostrarToast('Usuario editado correctamente');
@@ -140,4 +194,3 @@ export class ListarUsuarioPage implements OnInit {
     toast.present();
   }
 }
-
