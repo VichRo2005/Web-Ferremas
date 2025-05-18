@@ -114,7 +114,6 @@ export class ListarUsuarioPage implements OnInit {
         { text: 'Eliminar', handler: () => this.eliminarUsuario(correo) }
       ]
     });
-
     await alert.present();
   }
 
@@ -141,3 +140,4 @@ export class ListarUsuarioPage implements OnInit {
     toast.present();
   }
 }
+
