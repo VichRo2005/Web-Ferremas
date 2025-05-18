@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'listar-usuario',
     loadComponent: () =>
       import('./pages/listar-usuario/listar-usuario.page').then(m => m.ListarUsuarioPage)
+  },
+  {
+    path: 'listar-productos',
+    loadComponent: () =>
+      import('./pages/listar-productos/listar-productos.page').then(m => m.ListarProductosPage)
   }
 ];
 
@@ -24,3 +29,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

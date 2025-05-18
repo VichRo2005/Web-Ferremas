@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class ComboBoxService {
 
-  private BASE_URL = 'http://localhost:8000';
+  private BASE_URL = 'http://localhost:8000/combobox';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Obtener regiones
   getRegiones(): Observable<any[]> {
     return this.http.get<any[]>(`${this.BASE_URL}/regiones`);
   }
 
-  // ✅ Obtener comunas filtradas por region_id
+  // Obtener comunas filtradas por region_id
   getComunas(regionId: number): Observable<any[]> {
     const params = new HttpParams().set('region_id', regionId.toString());
     return this.http.get<any[]>(`${this.BASE_URL}/comunas`, { params });
@@ -25,11 +25,41 @@ export class ComboBoxService {
 
   // Obtener tipos de usuario
   getTiposUsuario(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.BASE_URL}/tipos_usuario`);
+    return this.http.get<any[]>(`${this.BASE_URL}/usuarios/tipos`);
   }
 
   // Obtener sucursales activas
   getSucursales(): Observable<any[]> {
     return this.http.get<any[]>(`${this.BASE_URL}/sucursales`);
+  }
+
+  // Obtener todos los productos
+  getProductos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/productos`);
+  }
+
+  // Obtener todas las categorías
+  getCategorias(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/categorias`);
+  }
+
+  // Obtener tipos de movimiento
+  getTiposMovimiento(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/movimientos`);
+  }
+
+  // Obtener tipos de despacho
+  getTiposDespacho(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/despacho/tipos`);
+  }
+
+  // Obtener estados de despacho
+  getEstadosDespacho(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/despacho/estados`);
+  }
+
+  // Obtener tipos de comprobantes
+  getTiposComprobante(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/comprobantes/tipos`);
   }
 }

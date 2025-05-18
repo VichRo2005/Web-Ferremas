@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Lista de Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agregar Producto</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="agregarProducto()">
+
+        <ion-item>
+          <ion-label position="floating">Categoría</ion-label>
+          <ion-select [(ngModel)]="nuevoProducto.categoria_id_categoria" name="categoria_id_categoria" required>
+            <ion-select-option *ngFor="let cat of categorias" [value]="cat.id_categoria">
+              {{ cat.desc_categoria }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre del Producto</ion-label>
+          <ion-input [(ngModel)]="nuevoProducto.nombre_producto" name="nombre_producto" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea [(ngModel)]="nuevoProducto.desc_producto" name="desc_producto" required></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Precio</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoProducto.precio" name="precio" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Stock Mínimo</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoProducto.stock_minimo" name="stock_minimo" required></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="ion-margin-top">Agregar</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos Registrados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="productos.length > 0; else sinProductos">
+        <ion-item *ngFor="let p of productos">
+          <ion-label>
+            <h2>{{ p.nombre_producto }}</h2>
+            <p>{{ p.desc_producto }}</p>
+            <p><strong>Precio:</strong> ${{ p.precio }}</p>
+            <p><strong>Categoría:</strong> {{ p.desc_categoria }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ng-template #sinProductos>
+        <p>No hay productos registrados.</p>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
