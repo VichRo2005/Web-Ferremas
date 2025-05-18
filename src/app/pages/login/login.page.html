@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Ferretería Web - Acceso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="login-wrapper">
+    <div class="login-box">
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <ion-text color="light">
+          <h2 class="ion-text-center">Bienvenido</h2>
+          <p class="ion-text-center">Inicia sesión para continuar</p>
+        </ion-text>
+
+        <!-- Correo -->
+        <ion-item>
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input type="email" name="correo" required [(ngModel)]="correo" #correoInput="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="correoInput.invalid && correoInput.touched">
+          <small class="ion-padding-start">Correo válido requerido</small>
+        </ion-text>
+
+        <!-- Contraseña -->
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" name="password" required minlength="8" [(ngModel)]="password"
+            #passwordInput="ngModel">
+          </ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.touched">
+          <small class="ion-padding-start">
+            Contraseña requerida (mínimo 8 caracteres)
+          </small>
+        </ion-text>
+
+        <!-- Botón Ingresar -->
+        <ion-button expand="block" color="primary" type="submit">
+          Ingresar
+        </ion-button>
+
+        <!-- Mensaje de error global -->
+        <ion-text color="danger" *ngIf="error">
+          <p class="ion-padding-top">{{ error }}</p>
+        </ion-text>
+      </form>
+
+      <!-- Enlaces secundarios -->
+      <div class="ion-text-center ion-padding-top">
+        <ion-button fill="clear" color="light" (click)="recuperarContrasena()">
+          ¿Olvidaste tu contraseña?
+        </ion-button>
+      </div>
+
+      <div class="ion-text-center ion-padding-top">
+        <ion-button fill="clear" color="light" (click)="entrarComoVisita()">
+          Entrar como invitado
+        </ion-button>
+      </div>
+
+      <div class="ion-text-center ion-padding-top">
+        <ion-text color="light">
+          <small>¿No tienes cuenta? <a href="#">Regístrate</a></small>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>

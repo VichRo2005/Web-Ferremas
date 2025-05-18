@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Gestión de Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- FORMULARIO CREAR / EDITAR USUARIO -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ modoEditar ? 'Editar Usuario' : 'Crear Usuario' }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuarioForm.nombre" name="nombre"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input type="email" [(ngModel)]="usuarioForm.correo" name="correo"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="!modoEditar">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="usuarioForm.password" name="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Tipo de Usuario</ion-label>
+        <ion-input [(ngModel)]="usuarioForm.tipo_usuario" name="tipo_usuario"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" color="success" (click)="guardarUsuario()">
+        {{ modoEditar ? 'Guardar Cambios' : 'Crear Usuario' }}
+      </ion-button>
+
+      <ion-button expand="block" fill="clear" color="medium" *ngIf="modoEditar" (click)="prepararFormularioCrear()">
+        Cancelar edición
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- LISTADO DE USUARIOS -->
+  <ion-list>
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{ usuario.nombre }}</h2>
+        <p>{{ usuario.correo }} - {{ usuario.tipo_usuario }}</p>
+      </ion-label>
+
+      <ion-button fill="clear" color="warning" (click)="prepararFormularioEditar(usuario)">
+        Editar
+      </ion-button>
+
+      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(usuario.correo)">
+        Eliminar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-text color="medium" *ngIf="usuarios.length === 0">
+    <p class="ion-padding">No hay usuarios registrados.</p>
+  </ion-text>
+</ion-content>

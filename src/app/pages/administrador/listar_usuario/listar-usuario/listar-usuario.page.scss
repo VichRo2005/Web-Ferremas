@@ -1,0 +1,84 @@
+ion-content {
+    --background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    background: url('/assets/img/ferre.png') no-repeat center center;
+    background-size: cover;
+}
+
+.page-wrapper {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+}
+
+.usuario-card {
+    background: rgba(44, 50, 60, 0.85); // fondo translúcido
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    color: #f5f5f5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+ion-card-title {
+    font-size: 1.5rem;
+    color: #00adb5;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+ion-item {
+    --background: transparent;
+    border-bottom: 1px solid rgba(237, 240, 242, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+ion-label,
+ion-label.sc-ion-label-md-h,
+ion-label.sc-ion-label-ios-h {
+    color: #e2e8f0 !important;
+}
+
+ion-input {
+    color: #ffffff;
+}
+
+ion-button {
+    margin-top: 1rem;
+    --background: #00adb5;
+    --color: #ffffff;
+    --box-shadow: 0 4px 12px rgba(0, 173, 181, 0.4);
+}
+
+ion-button:hover {
+    --background: #007e88;
+}
+
+ion-list {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+}
+
+ion-item h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+ion-item p {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+}
+
+ion-button[color="warning"],
+ion-button[color="danger"] {
+    margin-left: 0.3rem;
+    --box-shadow: none;
+}
