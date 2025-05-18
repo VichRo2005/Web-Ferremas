@@ -21,7 +21,30 @@ const routes: Routes = [
     path: 'listar-productos',
     loadComponent: () =>
       import('./pages/listar-productos/listar-productos.page').then(m => m.ListarProductosPage)
+  },
+  {
+    path: 'listar-categoria',
+    loadComponent: () =>
+      import('./pages/listar-categoria/listar-categoria.page').then(m => m.ListarCategoriaPage)
+  },
+  {
+    path: 'listar-sucursal',
+    loadComponent: () => import('./pages/listar-sucursal/listar-sucursal.page').then(m => m.ListarSucursalPage)
+  },
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo/catalogo.page').then(m => m.CatalogoPage)
+  },
+  {
+    path: 'registro',
+    loadComponent: () => import('./pages/registro/registro.page').then(m => m.RegistroPage)
   }
+
+
+
+
+
 ];
 
 @NgModule({
@@ -29,4 +52,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

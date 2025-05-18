@@ -1,0 +1,57 @@
+ion-content {
+    --background: none;
+    background: url('/assets/img/ferre.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.page-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+ion-searchbar,
+ion-select {
+    --background: rgba(255, 255, 255, 0.1);
+    --color: #fff;
+    color: #fff;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+ion-list {
+    background: transparent;
+}
+
+ion-item {
+    --background: rgba(44, 50, 60, 0.85);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    color: #f5f5f5;
+}
+
+ion-label h2 {
+    color: #00adb5;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+}
+
+ion-label p {
+    margin: 0.2rem 0;
+}
+
+ion-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}

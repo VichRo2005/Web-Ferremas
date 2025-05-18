@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Gestión de Sucursales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-wrapper">
+
+    <ion-button expand="block" (click)="abrirFormulario()">+ AGREGAR SUCURSAL</ion-button>
+
+    <ion-card *ngIf="mostrarFormulario">
+      <ion-card-header>
+        <ion-card-title>Formulario Sucursal</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">ID Sucursal</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevaSucursal.id_sucursal" placeholder="Ingrese ID único"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Dirección</ion-label>
+          <ion-input [(ngModel)]="nuevaSucursal.direccion" placeholder="Ingrese dirección"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Estado</ion-label>
+          <ion-select [(ngModel)]="nuevaSucursal.estado_sucursal">
+            <ion-select-option [value]="1">Activa</ion-select-option>
+            <ion-select-option [value]="0">Inactiva</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Región</ion-label>
+          <ion-select [(ngModel)]="nuevaSucursal.region_id" (ionChange)="seleccionarRegion(nuevaSucursal.region_id!)">
+            <ion-select-option *ngFor="let region of regiones" [value]="region.id_region">
+              {{ region.nombre_region }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="comunas.length > 0">
+          <ion-label position="stacked">Comuna</ion-label>
+          <ion-select [(ngModel)]="nuevaSucursal.comuna_id" (ionChange)="seleccionarComuna(nuevaSucursal.comuna_id!)">
+            <ion-select-option *ngFor="let comuna of comunas" [value]="comuna.id_comuna">
+              {{ comuna.nombre_comuna }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Región Seleccionada:</ion-label>
+          <ion-text>{{ nuevaSucursal.nombre_region || 'Ninguna' }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Comuna Seleccionada:</ion-label>
+          <ion-text>{{ nuevaSucursal.nombre_comuna || 'Ninguna' }}</ion-text>
+        </ion-item>
+
+        <ion-button expand="full" (click)="guardarSucursal()">GUARDAR</ion-button>
+        <ion-button expand="full" color="medium" (click)="mostrarFormulario = false">CANCELAR</ion-button>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-item *ngFor="let sucursal of sucursales">
+        <ion-label class="ion-text-wrap">
+          <h3>ID: {{ sucursal.id_sucursal }}</h3>
+          <p>Dirección: {{ sucursal.direccion }}</p>
+          <p>Estado: {{ sucursal.estado_sucursal == 1 ? 'Activa' : 'Inactiva' }}</p>
+          <p>Comuna: {{ sucursal.nombre_comuna || '-' }}</p>
+          <p>Región: {{ sucursal.nombre_region || '-' }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>

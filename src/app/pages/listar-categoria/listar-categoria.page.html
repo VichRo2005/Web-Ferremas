@@ -1,0 +1,18 @@
+<ion-content>
+  <div class="page-wrapper">
+    <ion-button expand="block" (click)="agregarCategoria()">+ AGREGAR CATEGORÍA</ion-button>
+
+    <ion-searchbar placeholder="Buscar categoría..."></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let categoria of categorias">
+        <ion-label class="ion-text-wrap">
+          <h3>ID Categoría: {{ categoria.id_categoria }}</h3>
+          <p>Nombre Categoría: {{ categoria.desc_categoria }}</p>
+          <p>Estado: {{ categoria.estado_categoria == 1 ? 'Activa' : 'Inactiva' }}</p>
+        </ion-label>
+        <ion-button (click)="mostrarOpciones(categoria)">MÁS ACCIONES</ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

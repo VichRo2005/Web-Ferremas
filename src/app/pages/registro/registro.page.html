@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Registro de Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form #formRegistro="ngForm" (ngSubmit)="registrarUsuario()" class="form-wrapper">
+
+    <ion-item>
+      <ion-label position="stacked">Correo Electrónico</ion-label>
+      <ion-input type="email" name="correo" [(ngModel)]="usuario.correo" required maxlength="320"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="usuario.password" required minlength="6"
+        maxlength="100"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Primer Nombre</ion-label>
+      <ion-input name="p_nombre" [(ngModel)]="usuario.p_nombre" required maxlength="40"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Segundo Nombre</ion-label>
+      <ion-input name="s_nombre" [(ngModel)]="usuario.s_nombre" maxlength="40"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Apellido Paterno</ion-label>
+      <ion-input name="a_paterno" [(ngModel)]="usuario.a_paterno" required maxlength="40"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Apellido Materno</ion-label>
+      <ion-input name="a_materno" [(ngModel)]="usuario.a_materno" maxlength="40"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Comuna ID</ion-label>
+      <ion-input type="number" name="comuna_id" [(ngModel)]="usuario.comuna_id" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Dirección</ion-label>
+      <ion-input name="direccion" [(ngModel)]="usuario.direccion" required maxlength="255"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Teléfono</ion-label>
+      <ion-input type="tel" name="telefono" [(ngModel)]="usuario.telefono" maxlength="15"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" class="boton-registro" [disabled]="!formRegistro.valid">
+      Registrarse
+    </ion-button>
+
+  </form>
+</ion-content>
+
+<ion-footer class="footer-fixed">
+  <ion-toolbar>
+    <ion-button expand="block" color="medium" routerLink="/login">Volver al Login</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Catálogo de Productos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="mostrarCarrito()">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-badge color="light" *ngIf="carrito.length > 0">{{ carrito.length }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-wrapper">
+
+    <!-- Sucursal -->
+    <ion-select [(ngModel)]="sucursalId" placeholder="Seleccionar Sucursal" (ionChange)="cambiarSucursal(sucursalId)">
+      <ion-select-option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">
+        {{ sucursal.nombre_sucursal }}
+      </ion-select-option>
+    </ion-select>
+
+    <!-- Filtro de búsqueda -->
+    <ion-searchbar placeholder="Buscar productos..." [(ngModel)]="searchTerm" (ionInput)="buscarProductos()">
+    </ion-searchbar>
+
+    <!-- Filtro de categoría -->
+    <ion-select placeholder="Filtrar por categoría" [(ngModel)]="categoriaSeleccionada" (ionChange)="buscarProductos()">
+      <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+        {{ categoria.desc_categoria }}
+      </ion-select-option>
+    </ion-select>
+
+    <!-- Lista de productos -->
+    <ion-list>
+      <ion-item *ngFor="let producto of productos">
+        <ion-thumbnail slot="start">
+          <img [src]="'data:image/jpeg;base64,' + producto.imagen" alt="Producto" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ producto.nombre_producto }}</h2>
+          <p>{{ producto.desc_producto }}</p>
+          <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+          <p><strong>Stock:</strong> {{ producto.stock }}</p>
+          <p><strong>Categoría:</strong> {{ producto.nombre_categoria }}</p>
+          <ion-button expand="block" size="small" (click)="agregarAlCarrito(producto)">
+            Agregar al carrito
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>
