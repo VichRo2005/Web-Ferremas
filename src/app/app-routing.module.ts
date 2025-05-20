@@ -54,6 +54,18 @@ const routes: Routes = [
   {
     path: 'ecommerce-detalle-carrito',
     loadChildren: () => import('./pages/ecommerce-detalle-carrito/ecommerce-detalle-carrito.module').then( m => m.EcommerceDetalleCarritoPageModule)
+  },
+  {
+    path: 'ecommerce-compra-exitosa',
+    loadChildren: () => import('./pages/ecommerce-compra-exitosa/ecommerce-compra-exitosa.module').then( m => m.EcommerceCompraExitosaPageModule)
+  },
+  {
+    path: 'ecommerce-compra-fallida',
+    loadChildren: () => import('./pages/ecommerce-compra-fallida/ecommerce-compra-fallida.module').then( m => m.EcommerceCompraFallidaPageModule)
+  },
+  {
+    path: 'pagina-pendiente',
+    loadChildren: () => import('./pages/pagina-pendiente/pagina-pendiente.module').then( m => m.PaginaPendientePageModule)
   }
 
 
