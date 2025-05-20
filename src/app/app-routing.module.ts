@@ -42,6 +42,18 @@ const routes: Routes = [
   },  {
     path: 'ppal-boeguero',
     loadChildren: () => import('./pages/ppal-boeguero/ppal-boeguero.module').then( m => m.PpalBoegueroPageModule)
+  },
+  {
+    path: 'bodeguero-listarstock',
+    loadChildren: () => import('./pages/bodeguero-listarstock/bodeguero-listarstock.module').then( m => m.BodegueroListarstockPageModule)
+  },
+  {
+    path: 'bodeguero-modificar-stock',
+    loadChildren: () => import('./pages/bodeguero-modificar-stock/bodeguero-modificar-stock.module').then( m => m.BodegueroModificarStockPageModule)
+  },
+  {
+    path: 'ecommerce-detalle-carrito',
+    loadChildren: () => import('./pages/ecommerce-detalle-carrito/ecommerce-detalle-carrito.module').then( m => m.EcommerceDetalleCarritoPageModule)
   }
 
 
