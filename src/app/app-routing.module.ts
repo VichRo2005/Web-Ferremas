@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'registro',
     loadComponent: () => import('./pages/registro/registro.page').then(m => m.RegistroPage)
+  },  {
+    path: 'ppal-boeguero',
+    loadChildren: () => import('./pages/ppal-boeguero/ppal-boeguero.module').then( m => m.PpalBoegueroPageModule)
   }
+
 
 
 
