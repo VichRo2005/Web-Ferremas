@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Catálogo de Productos</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="mostrarCarrito()">
@@ -14,9 +19,9 @@
   <div class="page-wrapper">
 
     <!-- Sucursal -->
-    <ion-select [(ngModel)]="sucursal_id" placeholder="Seleccionar Sucursal" (ionChange)="cambiarSucursal(sucursal_id)">
-      <ion-select-option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">
-        {{ sucursal.nombre_sucursal }}
+    <ion-select [(ngModel)]="sucursal_id" placeholder="Seleccionar Sucursal" (ionChange)="confirmarCambioSucursal(sucursal_id)">
+      <ion-select-option *ngFor="let s of sucursales" [value]="s.id_sucursal">
+        {{ s.desc_region }} - {{ s.desc_comuna }} - {{ s.direccion_sucursal }}
       </ion-select-option>
     </ion-select>
 
@@ -26,6 +31,7 @@
 
     <!-- Filtro de categoría -->
     <ion-select placeholder="Filtrar por categoría" [(ngModel)]="categoriaSeleccionada" (ionChange)="buscarProductos()">
+       <ion-select-option [value]="null">Todas</ion-select-option>
       <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
         {{ categoria.desc_categoria }}
       </ion-select-option>

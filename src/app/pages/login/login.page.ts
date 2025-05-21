@@ -33,6 +33,19 @@ export class LoginPage {
     private alertController: AlertController
   ) {}
 
+   // 👇 AÑADE ESTE MÉTODO
+  async ionViewWillEnter() {
+    const id_carrito = await this.storage.get('id_carrito');
+    if (id_carrito) {
+      try {
+        await this.gestionaCarrito.desactivarCarrito(id_carrito).toPromise();
+      } catch (e) {
+        console.warn('No se pudo desactivar el carrito', e);
+      }
+    }
+    await this.storage.clear();
+  }
+
   async mostrarSelectorSucursalPopup(sucursales: any[]) {
     const alert = await this.alertController.create({
       header: 'Seleccione una sucursal',
