@@ -28,7 +28,7 @@ export interface CompraRequest {
   providedIn: 'root'
 })
 export class GestionaCarritoService {
-  private BASE_URL = 'http://localhost:8000/ecommerce';
+  private BASE_URL = 'http://localhost:8000/api/ecommerce';
 
   constructor(private http: HttpClient) { }
 

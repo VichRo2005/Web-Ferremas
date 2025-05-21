@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ComboBoxService {
 
-  private BASE_URL = 'http://localhost:8000/combobox';
+  private BASE_URL = 'http://localhost:8000/api/combobox';
 
   constructor(private http: HttpClient) { }
 

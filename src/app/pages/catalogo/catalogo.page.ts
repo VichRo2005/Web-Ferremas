@@ -26,8 +26,9 @@ export class CatalogoPage implements OnInit {
   searchTerm: string = '';
   categoriaSeleccionada: number | null = null;
   sucursalId: number = 1;
-  usuarioId: number = 1;
   idCarrito: number | null = null;
+
+  
   carrito: DetalleCarrito[] = [];
 
   constructor(
@@ -38,18 +39,12 @@ export class CatalogoPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.crearCarrito();
     this.cargarCategorias();
     this.cargarSucursales();
     this.buscarProductos();
   }
 
-  crearCarrito() {
-    this.carritoService.crearCarrito(this.usuarioId).subscribe(res => {
-      this.idCarrito = res.id_carrito;
-      this.actualizarCarrito();
-    });
-  }
+
 
   cargarCategorias() {
     this.comboBoxService.getCategorias().subscribe({
