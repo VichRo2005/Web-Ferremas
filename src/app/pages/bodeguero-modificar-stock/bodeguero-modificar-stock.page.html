@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>bodegueroModificarStock</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Modificar Stock</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">bodegueroModificarStock</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="buscarProductos()" placeholder="Buscar producto"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let prod of filteredStock">
+      <ion-label>
+        <h2>{{ prod.producto }}</h2>
+        <p>Stock actual: {{ prod.cantidad_actual }}</p>
+        <p>Stock mínimo: {{ prod.stock_minimo }}</p>
+      </ion-label>
+      <ion-button fill="solid" color="warning" slot="end" (click)="presentActionSheet(prod)">
+        Modificar
+      </ion-button>
+    </ion-item>
+
+    <ion-item *ngIf="filteredStock.length === 0">
+      <ion-label>
+        <h5>Ups... Producto(s) no encontrado(s).</h5>
+        <p>Verifique el nombre o borre la búsqueda.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

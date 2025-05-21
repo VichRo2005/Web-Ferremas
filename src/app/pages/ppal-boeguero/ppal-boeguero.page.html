@@ -1,13 +1,21 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ppalBoeguero</ion-title>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Bodeguero</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ppalBoeguero</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="bodeguero-wrapper">
+    <div class="bodeguero-box">
+      <h2>Menú Bodeguero</h2>
+
+      <ion-button expand="block" color="primary" (click)="irAGestionarStock()">
+        Gestionar Stock
+      </ion-button>
+
+      <ion-button expand="block" color="success" (click)="irAGestionarDespacho()">
+        Gestionar Despacho
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
