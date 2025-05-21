@@ -39,33 +39,34 @@ const routes: Routes = [
   {
     path: 'registro',
     loadComponent: () => import('./pages/registro/registro.page').then(m => m.RegistroPage)
-  },  {
+  },
+  {
     path: 'ppal-boeguero',
-    loadChildren: () => import('./pages/ppal-boeguero/ppal-boeguero.module').then( m => m.PpalBoegueroPageModule)
+    loadComponent: () => import('./pages/ppal-boeguero/ppal-boeguero.page').then( m => m.PpalBoegueroPage)
   },
   {
     path: 'bodeguero-listarstock',
-    loadChildren: () => import('./pages/bodeguero-listarstock/bodeguero-listarstock.module').then( m => m.BodegueroListarstockPageModule)
+    loadComponent: () => import('./pages/bodeguero-listarstock/bodeguero-listarstock.page').then( m => m.BodegueroListarstockPage)
   },
   {
     path: 'bodeguero-modificar-stock',
-    loadChildren: () => import('./pages/bodeguero-modificar-stock/bodeguero-modificar-stock.module').then( m => m.BodegueroModificarStockPageModule)
+    loadComponent: () => import('./pages/bodeguero-modificar-stock/bodeguero-modificar-stock.page').then( m => m.BodegueroModificarStockPage)
   },
   {
     path: 'ecommerce-detalle-carrito',
-    loadChildren: () => import('./pages/ecommerce-detalle-carrito/ecommerce-detalle-carrito.module').then( m => m.EcommerceDetalleCarritoPageModule)
+    loadComponent: () => import('./pages/ecommerce-detalle-carrito/ecommerce-detalle-carrito.page').then( m => m.EcommerceDetalleCarritoPage)
   },
   {
     path: 'ecommerce-compra-exitosa',
-    loadChildren: () => import('./pages/ecommerce-compra-exitosa/ecommerce-compra-exitosa.module').then( m => m.EcommerceCompraExitosaPageModule)
+    loadComponent: () => import('./pages/ecommerce-compra-exitosa/ecommerce-compra-exitosa.page').then( m => m.EcommerceCompraExitosaPage)
   },
   {
     path: 'ecommerce-compra-fallida',
-    loadChildren: () => import('./pages/ecommerce-compra-fallida/ecommerce-compra-fallida.module').then( m => m.EcommerceCompraFallidaPageModule)
+    loadComponent: () => import('./pages/ecommerce-compra-fallida/ecommerce-compra-fallida.page').then( m => m.EcommerceCompraFallidaPage)
   },
   {
     path: 'pagina-pendiente',
-    loadChildren: () => import('./pages/pagina-pendiente/pagina-pendiente.module').then( m => m.PaginaPendientePageModule)
+    loadComponent: () => import('./pages/pagina-pendiente/pagina-pendiente.page').then( m => m.PaginaPendientePage)
   }
 
 

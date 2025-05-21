@@ -10,14 +10,15 @@ export class GestionUsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  register(user: any): Observable<any> {
+/* register(user: any): Observable<any> {
     return this.http.post(`${this.API_URL}/register`, user);
   }
-
+*/
   login(correo: string, password: string): Observable<any> {
     return this.http.post(`${this.API_URL}/login`, { correo, password });
   }
 
+  /*
   getUserInfo(id_usuario: number): Observable<any> {
     const params = new HttpParams().set('id_usuario', id_usuario);
     return this.http.get(`${this.API_URL}/info`, { params });
@@ -44,6 +45,7 @@ export class GestionUsuariosService {
     return this.http.post(`${this.API_URL}/temporary/deactivate/${user_id}`, {});
   }
 
+  /*
   sendRecoveryCode(correo: string): Observable<any> {
     const params = new HttpParams().set('correo', correo);
     return this.http.post(`${this.API_URL}/send-recovery-code`, null, { params });
@@ -63,4 +65,7 @@ export class GestionUsuariosService {
       .set('nueva_password', nuevaPassword);
     return this.http.post(`${this.API_URL}/recuperar/contrasena`, null, { params });
   }
+
+  */
 }
+

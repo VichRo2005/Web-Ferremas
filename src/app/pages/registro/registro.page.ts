@@ -31,7 +31,7 @@ export class RegistroPage {
     private alertCtrl: AlertController,
     private router: Router
   ) { }
-
+  /*
   registrarUsuario() {
     this.gestionUsuarios.register(this.usuario).subscribe({
       next: async () => {
@@ -53,4 +53,5 @@ export class RegistroPage {
       }
     });
   }
+    */
 }

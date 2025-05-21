@@ -61,6 +61,7 @@ export class LoginPage {
     });
   }
 
+  /*
   entrarComoVisita() {
     this.gestionUsuarios.createTemporaryUser().subscribe({
       next: (res) => {
@@ -77,4 +78,6 @@ export class LoginPage {
   recuperarContrasena() {
     this.navigation.goTo('/recuperar-password');
   }
+
+  */
 }
