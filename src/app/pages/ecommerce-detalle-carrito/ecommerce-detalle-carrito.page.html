@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ecommerce-DetalleCarrito</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <!-- Botón cerrar sesión -->
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarSesion()" fill="clear">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="volverAlCatalogo()" fill="clear">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Detalle del Carrito</ion-title>
+    <!-- Botón volver al catálogo -->
+    
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ecommerce-DetalleCarrito</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-content>
+  <div class="page-wrapper">
+
+    <ion-list *ngIf="carrito.length > 0; else carritoVacio">
+      <ion-item *ngFor="let item of carrito">
+        <ion-thumbnail slot="start">
+          <img [src]="'data:image/jpeg;base64,' + item.imagen" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ item.nombre_producto }}</h2>
+          <p><strong>Precio Unitario:</strong> ${{ item.precio_unitario }}</p>
+          <p><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+        </ion-label>
+        <ion-button color="danger" fill="clear" slot="end" (click)="eliminarProducto(item.id_producto)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #carritoVacio>
+      <ion-card>
+        <ion-card-content>Tu carrito está vacío.</ion-card-content>
+      </ion-card>
+    </ng-template>
+
+    <ion-button expand="block" color="success" (click)="procesarCompra()" [disabled]="carrito.length === 0">
+      Procesar Compra
+    </ion-button>
+
+  </div>
 </ion-content>

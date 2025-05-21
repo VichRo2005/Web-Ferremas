@@ -10,6 +10,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { DivisaService } from 'src/app/services/divisa.service';
 
 
+
 import {
   GestionaCarritoService,
   AgregarItemCarrito,
@@ -220,9 +221,8 @@ async confirmarCambioSucursal(id: number) {
 
 
   mostrarCarrito() {
-    let contenido = this.carrito.map(c => `- ${c.nombre_producto} x${c.cantidad}`).join('\n');
-    alert('Carrito de compras:\n' + contenido);
-  }
+  this.navigation.goTo('/ecommerce-detalle-carrito');
+}
 
 
   async mostrarCarritoExpirado() {

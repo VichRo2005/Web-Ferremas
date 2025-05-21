@@ -4,12 +4,17 @@ import { Observable } from 'rxjs';
 
 export interface DetalleCarrito {
   id_detalle: number;
-  id_producto: number;
-  nombre_producto?: string;
+  carrito_id_carrito: number;
   cantidad: number;
-  precio_unitario?: number;
   subtotal: number;
+  subtotal_temp: number;
+  id_sucursal: number;
+  id_producto: number;
+  nombre_producto: string;
+  imagen: string;              // <-- NUEVO
+  precio_unitario: number;    // <-- NUEVO
 }
+
 
 export interface AgregarItemCarrito {
   id_producto: number;
