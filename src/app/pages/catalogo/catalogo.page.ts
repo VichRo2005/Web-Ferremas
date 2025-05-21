@@ -7,6 +7,7 @@ import { CatalogoService, ProductFromSucursal } from 'src/app/services/catalogo.
 import { ComboBoxService } from 'src/app/services/combo-box.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { DivisaService } from 'src/app/services/divisa.service';
 
 
 import {
@@ -24,6 +25,8 @@ import {
   styleUrls: ['./catalogo.page.scss']
 })
 export class CatalogoPage implements OnInit {
+
+
   productos: (ProductFromSucursal & { cantidad?: number })[] = [];
   categorias: any[] = [];
   sucursales: any[] = [];
@@ -35,12 +38,20 @@ export class CatalogoPage implements OnInit {
   usuario_id: any;
   id_carrito: any;
 
+  tasaUSD = 0;
+  tasaEUR = 0;
+
+  mostrarUSD = false;
+  mostrarEUR = false;
+
+
 
 
   
   carrito: DetalleCarrito[] = [];
 
   constructor(
+    private divisaService: DivisaService,
     private catalogoService: CatalogoService,
     private comboBoxService: ComboBoxService,
     private storage: StorageService,
@@ -52,6 +63,11 @@ export class CatalogoPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.divisaService.obtenerTasaCambio().subscribe(rate => {
+      this.tasaUSD = rate.usd;
+      this.tasaEUR = rate.eur;
+    });
+
     this.id_carrito = await this.storage.get('id_carrito');
     this.sucursal_id = await this.storage.get('sucursal_id');
     this.usuario_id = await this.storage.get('usuario_id');
@@ -262,6 +278,14 @@ async mostrarAlerta(titulo: string, mensaje: string) {
       ]
     });
     await alert.present();
+  }
+
+  convertirUSD(valorCLP: number): string {
+    return this.tasaUSD > 0 ? '$' + (valorCLP * this.tasaUSD).toFixed(2) : '...';
+  }
+
+  convertirEUR(valorCLP: number): string {
+    return this.tasaEUR > 0 ? '€' + (valorCLP * this.tasaEUR).toFixed(2) : '...';
   }
   
 

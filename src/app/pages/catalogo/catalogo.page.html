@@ -1,19 +1,40 @@
 <ion-header>
   <ion-toolbar color="primary">
+
+    <!-- Botón Cerrar Sesión -->
     <ion-buttons slot="start">
-      <ion-button (click)="cerrarSesion()">
+      <ion-button (click)="cerrarSesion()" fill="clear">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <!-- Título -->
     <ion-title>Catálogo de Productos</ion-title>
+
+    <!-- Botón Carrito -->
     <ion-buttons slot="end">
-      <ion-button (click)="mostrarCarrito()">
+      <ion-button (click)="mostrarCarrito()" fill="clear">
         <ion-icon name="cart-outline"></ion-icon>
         <ion-badge color="light" *ngIf="carrito.length > 0">{{ carrito.length }}</ion-badge>
       </ion-button>
     </ion-buttons>
+
+  </ion-toolbar>
+
+  <!-- Sub-toolbar con botones de conversión -->
+  <ion-toolbar color="light">
+    <ion-segment mode="ios" value="clp">
+      <ion-segment-button (click)="mostrarUSD = !mostrarUSD" value="usd">
+        <ion-label>USD</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="mostrarEUR = !mostrarEUR" value="eur">
+        <ion-label>EUR</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
+
+
 
 <ion-content>
   <div class="page-wrapper">
@@ -46,7 +67,9 @@
         <ion-label>
           <h2>{{ producto.nombre_producto }}</h2>
           <p>{{ producto.desc_producto }}</p>
-          <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+          <p><strong>Precio:</strong> ${{ producto.precio }} CLP</p>
+          <p *ngIf="mostrarUSD"><strong>USD:</strong> {{ convertirUSD(producto.precio) }}</p>
+          <p *ngIf="mostrarEUR"><strong>EUR:</strong> {{ convertirEUR(producto.precio) }}</p>
           <p><strong>Stock:</strong> {{ producto.stock }}</p>
           <ion-input
             type="number"
