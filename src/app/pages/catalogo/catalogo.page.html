@@ -14,7 +14,7 @@
   <div class="page-wrapper">
 
     <!-- Sucursal -->
-    <ion-select [(ngModel)]="sucursalId" placeholder="Seleccionar Sucursal" (ionChange)="cambiarSucursal(sucursalId)">
+    <ion-select [(ngModel)]="sucursal_id" placeholder="Seleccionar Sucursal" (ionChange)="cambiarSucursal(sucursal_id)">
       <ion-select-option *ngFor="let sucursal of sucursales" [value]="sucursal.id_sucursal">
         {{ sucursal.nombre_sucursal }}
       </ion-select-option>
@@ -35,19 +35,27 @@
     <ion-list>
       <ion-item *ngFor="let producto of productos">
         <ion-thumbnail slot="start">
-          <img [src]="'data:image/jpeg;base64,' + producto.imagen" alt="Producto" />
+          <img [src]="'data:image/jpeg;base64,' + producto.imagen" />
         </ion-thumbnail>
         <ion-label>
           <h2>{{ producto.nombre_producto }}</h2>
           <p>{{ producto.desc_producto }}</p>
           <p><strong>Precio:</strong> ${{ producto.precio }}</p>
           <p><strong>Stock:</strong> {{ producto.stock }}</p>
-          <p><strong>Categoría:</strong> {{ producto.nombre_categoria }}</p>
+          <ion-input
+            type="number"
+            min="1"
+            max="{{ producto.stock }}"
+            [(ngModel)]="producto.cantidad"
+            placeholder="Cantidad"
+            inputmode="numeric">
+          </ion-input>
           <ion-button expand="block" size="small" (click)="agregarAlCarrito(producto)">
             Agregar al carrito
           </ion-button>
         </ion-label>
       </ion-item>
+
     </ion-list>
 
   </div>

@@ -4,22 +4,24 @@ import { Observable } from 'rxjs';
 
 // Modelo base (ajústalo según tu backend)
 export interface ProductFromSucursal {
-  id_producto: number;
+  sucursal_id_sucursal: number;
+  producto_id_producto: number;
+  categoria_id_categoria: number;
   nombre_producto: string;
   desc_producto: string;
+  desc_categoria: string;
   precio: number;
   stock: number;
-  categoria_id_categoria: number;
-  nombre_categoria: string;
   imagen: string;
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogoService {
 
-  private BASE_URL = 'http://localhost:8000/tienda';
+  private BASE_URL = 'http://localhost:8000/api/tienda';
 
   constructor(private http: HttpClient) { }
 

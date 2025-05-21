@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 export interface DetalleCarrito {
   id_detalle: number;
   id_producto: number;
-  nombre_producto: string;
+  nombre_producto?: string;
   cantidad: number;
-  precio_unitario: number;
+  precio_unitario?: number;
   subtotal: number;
 }
 
@@ -17,12 +17,13 @@ export interface AgregarItemCarrito {
   id_sucursal: number;
 }
 
+
 export interface CompraRequest {
   id_carrito: number;
   tipo_comprobante: number;
   tipo_despacho: number;
   pago_confirmado: boolean;
-}
+} 
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,9 @@ export class GestionaCarritoService {
 
   // Procesar compra
   procesarCompra(data: CompraRequest): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/procesar-compra`, data);
+    return this.http.post(`${this.BASE_URL}/procesar-compra`, data);}
+
+  desactivarCarrito(id_carrito: number): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/carrito/${id_carrito}`);
   }
 }
