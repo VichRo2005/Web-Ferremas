@@ -1,28 +1,25 @@
 <ion-header>
   <ion-toolbar color="primary">
-
-    <!-- Botón cerrar sesión -->
     <ion-buttons slot="start">
       <ion-button (click)="cerrarSesion()" fill="clear">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
+    </ion-buttons>
 
+    <ion-title>Detalle del Carrito</ion-title>
+
+    <ion-buttons slot="end">
       <ion-button (click)="volverAlCatalogo()" fill="clear">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
-    <ion-title>Detalle del Carrito</ion-title>
-    <!-- Botón volver al catálogo -->
-    
-
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
   <div class="page-wrapper">
 
+    <!-- Lista de productos -->
     <ion-list *ngIf="carrito.length > 0; else carritoVacio">
       <ion-item *ngFor="let item of carrito">
         <ion-thumbnail slot="start">
@@ -45,9 +42,41 @@
       </ion-card>
     </ng-template>
 
-    <ion-button expand="block" color="success" (click)="procesarCompra()" [disabled]="carrito.length === 0">
-      Procesar Compra
-    </ion-button>
+    <!-- Resumen del carrito -->
+    <ion-card *ngIf="resumen">
+      <ion-card-header>
+        <ion-card-title>Resumen del Carrito</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Productos:</strong> {{ resumen.cantidad_productos }}</p>
+        <p><strong>Total Bruto:</strong> ${{ resumen.total_bruto }}</p>
+        <p><strong>Descuento:</strong> -${{ resumen.descuento }}</p>
+        <p><strong>Total Neto:</strong> ${{ resumen.total_neto }}</p>
+        <p><strong>IVA:</strong> ${{ resumen.iva }}</p>
+        <p><strong>Total Final:</strong> ${{ resumen.total_final }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botón principal de compra -->
+    <div class="boton-procesar-wrapper">
+      <ion-button expand="block" color="success" (click)="procesarCompra()" [disabled]="carrito.length === 0">
+        Procesar Compra
+      </ion-button>
+    </div>
+
+    <!-- Formulario Stripe -->
+    <ion-card *ngIf="mostrarFormularioPago">
+      <ion-card-header>
+        <ion-card-title>Pago con Tarjeta</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form (submit)="confirmarPago($event)">
+          <div id="card-element"><!-- Stripe renderiza aquí --></div>
+          <ion-button expand="block" type="submit" color="primary">Confirmar Pago</ion-button>
+          <ion-button expand="block" color="medium" (click)="mostrarFormularioPago = false">Cancelar</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
 
   </div>
 </ion-content>
