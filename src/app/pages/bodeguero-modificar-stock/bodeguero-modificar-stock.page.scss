@@ -38,7 +38,8 @@ ion-content::before {
     border-radius: 1rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
-    color: #f5f5f5;
+    color: #ffffff;
+    /* Color general del texto */
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow-y: auto;
     max-height: 90vh;
@@ -58,13 +59,13 @@ ion-item {
 }
 
 ion-label {
-    color: #000000 !important;
-    /* Color negro para etiquetas */
+    color: #ffffff !important;
+    /* ← Blanco */
 }
 
 ion-input {
-    color: #000000 !important;
-    /* Color negro para texto ingresado */
+    color: #ffffff !important;
+    /* ← Blanco */
 }
 
 ion-button {
