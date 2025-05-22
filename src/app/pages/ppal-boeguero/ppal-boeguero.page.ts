@@ -12,14 +12,17 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './ppal-boeguero.page.html',
   styleUrls: ['./ppal-boeguero.page.scss'],
 })
+
 export class PpalBoegueroPage implements OnInit {
 
   constructor(private router: Router) { }
 
+  isDisabled = true;
+
   ngOnInit() { }
 
   irAGestionarStock() {
-    this.router.navigate(['/gestionar-stock']);
+    this.router.navigate(['bodeguero-listarstock']);
   }
 
   irAGestionarDespacho() {

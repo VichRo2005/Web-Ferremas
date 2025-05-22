@@ -142,7 +142,7 @@ export class LoginPage {
             this.navigation.goTo('/pagina-pendiente');
             break;
           case 5: // Bodeguero
-            this.navigation.goTo('/bodeguero');
+            this.navigation.goTo('/ppal-boeguero');
             break;
           default:
             this.navigation.goTo('/login');
