@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarSesion()" fill="clear">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Stock de Productos</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,20 +16,24 @@
 
       <ion-list *ngIf="stock.length > 0">
         <ion-item *ngFor="let producto of stock">
+          <ion-thumbnail slot="start">
+            <img [src]="'data:image/jpeg;base64,' + producto.imagen" />
+          </ion-thumbnail>
+
           <ion-label class="ion-text-wrap">
-            <h3>{{ producto.producto }}</h3>
-            <p>Stock mínimo: {{ producto.stock_minimo }}</p>
+            <h3>{{ producto.nombre_producto }}</h3>
+            <p>{{ producto.desc_producto }}</p>
+            <p><strong>Stock actual:</strong> {{ producto.stock }}</p>
+            <p><strong>Stock mínimo:</strong> {{ producto.stock_minimo }}</p>
+            <p><strong>Categoría:</strong> {{ producto.desc_categoria }}</p>
           </ion-label>
 
-          <ion-input type="number" [(ngModel)]="cantidades[producto.id_producto]" min="0"></ion-input>
-
-          <ion-button color="success" size="small" (click)="actualizarCantidad(producto.id_producto)">
+          <ion-button color="warning" size="small" (click)="actualizarCantidad(producto)">
             Actualizar
           </ion-button>
         </ion-item>
       </ion-list>
 
-      <!-- ✅ Mensaje vacío bien posicionado -->
       <div *ngIf="stock.length === 0" class="mensaje-vacio">
         <ion-icon name="alert-circle-outline"></ion-icon>
         No se encontraron productos con stock.

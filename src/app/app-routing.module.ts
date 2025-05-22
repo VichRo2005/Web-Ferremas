@@ -48,10 +48,7 @@ const routes: Routes = [
     path: 'bodeguero-listarstock',
     loadComponent: () => import('./pages/bodeguero-listarstock/bodeguero-listarstock.page').then( m => m.BodegueroListarstockPage)
   },
-  {
-    path: 'bodeguero-modificar-stock',
-    loadComponent: () => import('./pages/bodeguero-modificar-stock/bodeguero-modificar-stock.page').then( m => m.BodegueroModificarStockPage)
-  },
+
   {
     path: 'ecommerce-detalle-carrito',
     loadComponent: () => import('./pages/ecommerce-detalle-carrito/ecommerce-detalle-carrito.page').then( m => m.EcommerceDetalleCarritoPage)
