@@ -65,13 +65,13 @@
     </div>
 
     <!-- Formulario Stripe -->
-    <ion-card *ngIf="mostrarFormularioPago">
+    <ion-card *ngIf="mostrarFormularioPago" class="stripe-form-card">
       <ion-card-header>
         <ion-card-title>Pago con Tarjeta</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <form (submit)="confirmarPago($event)">
-          <div id="card-element"><!-- Stripe renderiza aquí --></div>
+          <div id="card-element" style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1rem;"></div>
           <ion-button expand="block" type="submit" color="primary">Confirmar Pago</ion-button>
           <ion-button expand="block" color="medium" (click)="mostrarFormularioPago = false">Cancelar</ion-button>
         </form>

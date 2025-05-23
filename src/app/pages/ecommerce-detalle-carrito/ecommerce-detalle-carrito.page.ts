@@ -9,8 +9,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { DetalleCarrito } from 'src/app/services/gestiona-carrito.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { StripeService } from 'src/app/services/stripe.service';
-import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
-import { StripePaymentElement } from '@stripe/stripe-js';
+import { loadStripe, Stripe, StripeElements, StripeCardElement} from '@stripe/stripe-js';
+
 
 
 @Component({
@@ -22,6 +22,7 @@ import { StripePaymentElement } from '@stripe/stripe-js';
 export class EcommerceDetalleCarritoPage implements OnInit {
   stripe: Stripe | null = null;
   elements: StripeElements | null = null;
+  cardElement: StripeCardElement | null = null; // ← para confirmar luego
   mostrarFormularioPago = false;
   tipoDespacho: number = 1;
   tipoComprobante: number = 1;
@@ -67,7 +68,36 @@ export class EcommerceDetalleCarritoPage implements OnInit {
   }
 
   async procesarCompra() {
-  // Paso 1: Selección de tipo de despacho
+  const monto = this.resumen.total_final;
+
+  const response = await fetch(`http://localhost:8000/api/stripe/create-payment-intent?monto=${monto}`, {
+    method: 'POST'
+  });
+  const { clientSecret } = await response.json();
+
+  this.stripe = await this.stripeService.getStripe();
+  this.elements = this.stripe?.elements({ clientSecret }) || null;
+
+  this.mostrarFormularioPago = true;
+
+  // 🔁 Espera que Angular renderice el div
+  setTimeout(() => {
+    const element = document.getElementById('card-element');
+    if (this.elements && element) {
+      this.cardElement = this.elements.create('card');
+      this.cardElement.mount('#card-element');
+    } else {
+      alert('No se encontró el contenedor para Stripe.');
+    }
+  }, 100); // 100ms suele ser suficiente
+}
+
+
+  async confirmarPago(event: Event) {
+  event.preventDefault();
+  if (!this.stripe || !this.cardElement) return;
+
+  // Pregunta primero tipo de despacho
   const despachoAlert = await this.alertCtrl.create({
     header: 'Tipo de Despacho',
     inputs: [
@@ -84,7 +114,6 @@ export class EcommerceDetalleCarritoPage implements OnInit {
         handler: async (selectedDespacho: number) => {
           this.tipoDespacho = selectedDespacho;
 
-          // Paso 2: Selección de tipo de comprobante
           const comprobanteAlert = await this.alertCtrl.create({
             header: 'Tipo de Comprobante',
             inputs: [
@@ -101,22 +130,34 @@ export class EcommerceDetalleCarritoPage implements OnInit {
                 handler: async (selectedComprobante: number) => {
                   this.tipoComprobante = selectedComprobante;
 
-                  // ⚙️ Resumen del carrito y generación del PaymentIntent
-                  const resumen = this.resumen;
-                  const monto = resumen.total_final;
-
-                  const response = await fetch(
-                    'http://localhost:8000/api/stripe/create-payment-intent?monto=' + monto,
-                    { method: 'POST' }
+                  // Confirmar pago
+                  const { error, paymentIntent } = await this.stripe!.confirmCardPayment(
+                    await this.obtenerClientSecret(), {
+                      payment_method: {
+                        card: this.cardElement!,
+                        billing_details: { name: 'Cliente' }
+                      }
+                    }
                   );
-                  const { clientSecret } = await response.json();
 
-                  this.stripe = await this.stripeService.getStripe();
-                  this.elements = (this.stripe?.elements({ clientSecret }) || null);
-                  const cardElement = this.elements?.create('payment');
-                  cardElement?.mount('#card-element');
-
-                  this.mostrarFormularioPago = true;
+                  if (error) {
+                    alert("Error en el pago: " + error.message);
+                  } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                    this.carritoService.procesarCompra({
+                      id_carrito: this.id_carrito,
+                      tipo_comprobante: this.tipoComprobante,
+                      tipo_despacho: this.tipoDespacho,
+                      pago_confirmado: true
+                    }).subscribe({
+                      next: () => {
+                        alert("Compra exitosa: Comprobante enviado a su correo");
+                        this.navigation.goTo('/catalogo');
+                      },
+                      error: () => {
+                        alert("Error al procesar la compra");
+                      }
+                    });
+                  }
                 }
               }
             ]
@@ -132,39 +173,13 @@ export class EcommerceDetalleCarritoPage implements OnInit {
 }
 
 
-  async confirmarPago(event: Event) {
-    event.preventDefault();
-
-    if (!this.stripe || !this.elements) return;
-
-    const { error, paymentIntent } = await this.stripe.confirmPayment({
-      elements: this.elements,
-      confirmParams: {
-        return_url: 'http://localhost:8100/success', // opcional
-      },
-      redirect: 'if_required'
+  async obtenerClientSecret(): Promise<string> {
+    const response = await fetch(`http://localhost:8000/api/stripe/create-payment-intent?monto=${this.resumen.total_final}`, {
+      method: 'POST'
     });
-
-    if (error) {
-      alert("Error en el pago: " + error.message);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      this.carritoService.procesarCompra({
-        id_carrito: this.id_carrito,
-        tipo_comprobante: this.tipoComprobante,
-        tipo_despacho: this.tipoDespacho,
-        pago_confirmado: true
-      }).subscribe({
-        next: res => {
-          alert("Compra exitosa: Comprobante enviado a su correo");
-          this.navigation.goTo('/catalogo');
-        },
-        error: err => {
-          alert("Error al procesar la compra");
-        }
-      });
-    }
+    const data = await response.json();
+    return data.clientSecret;
   }
-
 
 
   obtenerResumen() {
